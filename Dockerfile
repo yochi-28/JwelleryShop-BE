@@ -1,12 +1,14 @@
-# Build stage
-FROM gradle:8.5-jdk17 AS build
+# Build stage with JDK 25
+FROM eclipse-temurin:25-jdk AS build
 WORKDIR /app
-COPY . .
+# Install Gradle (or use wrapper)
+COPY gradlew build.gradle settings.gradle ./
 RUN chmod +x gradlew
+COPY . .
 RUN ./gradlew bootJar --no-daemon
 
-# Run stage - Use valid Eclipse Temurin image names
-FROM eclipse-temurin:17-jre
+# Run stage (use a compatible JRE, e.g., 25 or 21)
+FROM eclipse-temurin:25-jre
 EXPOSE 5001
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
