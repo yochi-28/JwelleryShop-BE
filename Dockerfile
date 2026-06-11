@@ -5,8 +5,8 @@ COPY . .
 RUN chmod +x gradlew
 RUN ./gradlew bootJar --no-daemon
 
-# Run stage
-FROM eclipse-temurin:17-jre-slim
+# Run stage - Use valid Eclipse Temurin image names
+FROM eclipse-temurin:17-jre
 EXPOSE 5001
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
