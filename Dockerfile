@@ -5,8 +5,8 @@ COPY . .
 RUN chmod +x gradlew
 RUN ./gradlew bootJar --no-daemon
 
-# Run stage - use Eclipse Temurin (official JDK)
-FROM eclipse-temurin:17-jdk-slim
+# Run stage
+FROM eclipse-temurin:17-jre-slim
 EXPOSE 5001
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
